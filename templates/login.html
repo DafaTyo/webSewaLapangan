@@ -1,0 +1,40 @@
+{% extends "base.html" %} 
+{% block title %}Masuk{% endblock %} 
+{% block content %}
+
+<!-- component -->
+<div class="bg-white flex justify-center items-center h-screen">
+<!-- Left: Image -->
+
+<div class="w-3/5 h-screen hidden lg:block">
+  <a href="/" class="absolute flex" style="top: 25px; left: 25px;">
+    <img src="{{ url_for('static', filename='dist/img/Logo Name.png') }}" width="30px"  alt="">
+    <p class="text-white ms-3">Nou Arena</p>
+  </a>
+  <img src="{{ url_for('static', filename='dist/img/loginRegis.png') }}" alt="Placeholder Image" class="object-cover w-full h-full">
+</div>
+<!-- Right: Login Form -->
+<div class= "lg:p-20 md:p-52 sm:20 p-8 w-full lg:w-2/5" style="margin-top: -200px;">
+  <div class="ms-3">
+    <h1 class="text-4xl font-semibold mb-4">Masuk</h1>
+    <p class="text-xs" style="margin-top: -10px;">Belum punya akun? <a href="{{ url_for('userRegister') }}" style="color:#0C359E;">Daftar</a></p>
+  </div>
+    <form action="#" method="POST">
+    <!-- Username Input -->
+    <div class="mb-4 mt-11">
+      <input type="text" id="username" name="username" placeholder="Masukkan Email" class="w-full border text-xs h-11 bg-gray-300 border-gray-300 rounded-md py-2 px-3 focus:outline-none border-blue-500" autocomplete="off">
+    </div>
+    <!-- Password Input -->
+    <div class="mb-9">
+      <input type="password" id="password" name="password" placeholder="Masukkan Kata Sandi" class="w-full border text-xs h-11 bg-gray-300 border-gray-300 rounded-md py-2 px-3 focus:outline-none border-blue-500" autocomplete="off">
+    </div>
+    <!-- Login Button -->
+     <div>
+        <div class="w-full bg-gray-300 mb-3" style="height: 0.5px;"></div>
+       <button type="submit" class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Masuk</button>
+      </div>
+  </form>
+</div>
+</div>
+
+{% endblock %}

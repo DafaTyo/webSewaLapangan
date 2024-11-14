@@ -1,0 +1,49 @@
+{% extends "base.html" %} 
+{% block title %}Daftar{% endblock %} 
+{% block content %}
+
+
+<!-- component -->
+<!-- component -->
+<div class="bg-white flex justify-center items-center h-screen">
+    <!-- Left: Image -->
+    <div class="w-3/5 h-screen hidden lg:block">
+      <a href="/" class="absolute flex" style="top: 25px; left: 25px;">
+        <img src="{{ url_for('static', filename='dist/img/Logo Name.png') }}" width="30px"  alt="">
+        <p class="text-white ms-3">Nou Arena</p>
+      </a>
+      <img src="{{ url_for('static', filename='dist/img/loginRegis.png') }}" alt="Placeholder Image" class="object-cover w-full h-full">
+    </div>
+<!-- Right: Login Form -->
+<div class= "lg:p-20 md:p-52 sm:20 p-8 w-full lg:w-2/5" style="margin-top: -120px;">
+  <div class="ms-3">
+    <h1 class="text-4xl font-semibold mb-4">Daftar</h1>
+    <p class="text-xs" style="margin-top: -10px;">Sudah punya akun? <a href="{{ url_for('userLogin') }}" style="color:#0C359E;">Masuk</a></p>
+  </div>
+    <form method="POST">
+
+    <div class="mb-4">
+      <input type="text" id="username" name="username" placeholder="Masukkan Username" class="w-full border text-xs h-11 bg-gray-300 border-gray-300 rounded-md py-2 px-3 focus:outline-none border-blue-500" autocomplete="off">
+    </div>
+    <div class="mb-4">
+      <input type="email" id="email" name="email" placeholder="Masukkan Email" class="w-full border text-xs h-11 bg-gray-300 border-gray-300 rounded-md py-2 px-3 focus:outline-none border-blue-500" autocomplete="off">
+    </div>
+    <div class="mb-4">
+      <input type="password" id="password" name="password" placeholder="Masukkan Kata Sandi" class="w-full border text-xs h-11 bg-gray-300 border-gray-300 rounded-md py-2 px-3 focus:outline-none border-blue-500" autocomplete="off">
+    </div>
+    <div class="flex items-start mb-6 ">
+        <div class="flex items-center h-5">
+        <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300  bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required />
+        </div>
+        <label for="remember" class="ms-2 mt-0.5 text-xs font-medium text-gray-900 dark:text-gray-300" >Saya setuju dengan <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">syarat dan ketentuan</a>.</label>
+    </div>
+    <!-- Login Button -->
+     <div>
+        <div class="w-full bg-gray-300 mb-3" style="height: 0.5px;"></div>
+       <button type="submit" class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Buat Akun</button>
+      </div>
+  </form>
+</div>
+</div>
+
+{% endblock %}

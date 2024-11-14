@@ -1,0 +1,170 @@
+{% extends "admin/base.html" %} 
+{% block title %}Masuk{% endblock %} 
+{% block content %}
+
+<div class="flex justify-between items-center mt-14 ms-2 ">
+    <h1 class="text-black text-2xl ms-2 font-semibold">Data Lapangan</h1>
+    <button data-modal-target="create-modal" data-modal-toggle="create-modal" type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Tambah Lapangan</button>
+</div>
+<div class="relative overflow-x-auto mt-2 ms-2 me-2 shadow-md sm:rounded-lg">
+   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+           <tr>
+               <th scope="col" class="px-6 py-3">
+                   Nama Lapangan
+               </th>
+               <th scope="col" class="px-6 py-3">
+                   Jenis Lapangan
+               </th>
+               <th scope="col" class="px-6 py-3">
+                   Harga
+               </th>
+               <th scope="col" class="px-6 py-3">
+                   foto
+               </th>
+               <th scope="col" class="px-6 py-3">
+                   Deskripsi
+               </th>
+               <th scope="col" class="px-6 py-3">
+                  Aksi
+               </th>
+           </tr>
+       </thead>
+       <tbody>
+        {% for dataLapangan in lapangan1 %}
+           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+               <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                   {{ dataLapangan.nama }}
+               </th>
+               <td class="px-6 py-4">
+                {{ dataLapangan.jenis }}
+               </td>
+               <td class="px-6 py-4">
+                Rp{{ dataLapangan.harga }}
+               </td>
+               <td class="px-6 py-4">
+                    <img src="../static/dist/img/{{ dataLapangan.foto }}" width="100px" alt="">
+               </td>
+               <td class="px-6 py-4">
+                {{ dataLapangan.deskripsi }}
+               </td>
+               <td class="px-6 py-4">
+                    <button data-modal-target="{{ dataLapangan._id }}-modal" data-modal-toggle="{{ dataLapangan._id }}-modal" class="font-medium p-1 text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
+                   <button onclick="hapusLapangan('/admin/lapangan/hapus/{{ dataLapangan._id}}')" class="font-medium p-1 text-red-600 dark:text-red-500 hover:underline">Hapus</button>
+               </td>
+           </tr>
+           {% endfor %}
+       </tbody>
+   </table>
+</div>
+  
+
+<!-- Modal Tambah Lapangan -->
+<!-- Main modal -->
+<div id="create-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <!-- Backdrop overlay -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
+    
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Buat Data Lapangan
+                </h3>
+                <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="create-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-4 md:p-5">
+                <form class="space-y-4" action="{{ url_for('tambahLapangan', ) }}" enctype="multipart/form-data" method="POST">
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis Lapangan</label>
+                    <select id="countries" name="jenis_lapangan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                      <option>Futsal</option>
+                      <option>Voly</option>
+                      <option>Badminton</option>
+                      <option>Basket</option>
+                    </select>
+
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga</label>
+                    <input type="number" name="harga_lapangan" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan Harga"> 
+
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Lapangan</label>
+                    <input type="text" name="nama_lapangan" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan Nama Lapangan">                     
+                    
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
+                    <input type="text" name="deskripsi_lapangan" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan Deskripsi">                     
+
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Foto Lapangan</label>
+                    <input name="foto_lapangan" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help"  accept=".png,.jpg,.jpeg" type="file">
+
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit Lapangan -->
+
+{% for dataLapangan in lapangan2 %}
+<!-- Main modal -->
+<div id="{{ dataLapangan._id }}-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <!-- Backdrop overlay -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
+    
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Edit Data Lapangan
+                </h3>
+                <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="{{ dataLapangan._id }}-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-4 md:p-5">
+                <form class="space-y-4" action="{{ url_for('editLapangan', id=dataLapangan._id) }}" enctype="multipart/form-data" method="POST">
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis Lapangan</label>
+                    <select id="countries" name="jenis_lapangan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option {% if dataLapangan.jenis == "Futsal" %} selected {% endif %}>Futsal</option>
+                        <option {% if dataLapangan.jenis == "Voly" %} selected {% endif %}>Voly</option>
+                        <option {% if dataLapangan.jenis == "Badminton" %} selected {% endif %}>Badminton</option>
+                        <option {% if dataLapangan.jenis == "Basket" %} selected {% endif %}>Basket</option>
+                    </select>
+
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga</label>
+                    <input type="number" value="{{ dataLapangan.harga }}" name="harga_lapangan" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan Harga"> 
+
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Lapangan</label>
+                    <input type="text" value="{{ dataLapangan.nama }}" name="nama_lapangan" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan Nama Lapangan">                     
+                    
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
+                    <input type="text" value="{{ dataLapangan.deskripsi }}" name="deskripsi_lapangan" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan Deskripsi">                     
+
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Foto Lapangan</label> 
+                    <input name="foto_lapangan" value="{{ dataLapangan.foto }}" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help"  accept=".png,.jpg,.jpeg" type="file">
+                    
+
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+{% endblock %}
